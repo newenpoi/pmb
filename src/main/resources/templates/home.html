@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments/general :: headerfiles"></th:block>
+</head>
+<body>
+	<th:block th:insert="fragments/general :: header"></th:block>
+  
+	<section class="d-flex justify-content-center align-items-center">
+		<div class="d-flex flex-column">
+			<div class="d-flex flex-row bg-green">
+				<div class="flex-grow-1">Contact</div>
+				<div class="flex-grow-1">Description</div>
+				<div class="flex-grow-1">Montant</div>
+			</div>
+			
+			<div class="d-flex flex-row payments" th:each="payment : ${paiements}">
+				<div class="flex-grow-1" th:text="${payment.receiver.name}"></div>
+				<div class="flex-grow-1" th:text="${payment.description}"></div>
+				<div class="flex-grow-1" th:text="${payment.amount}"></div>
+			</div>
+		</div>
+	</section>
+
+	<th:block th:insert="fragments/general :: footer"></th:block>
+</body>
+</html>

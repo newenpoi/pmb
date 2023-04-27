@@ -1,0 +1,8 @@
+
+.bg-green {
+	background-color: #6abd3c;
+}
+
+.payments:nth-child(even) {
+	background-color: #ededed;
+}
