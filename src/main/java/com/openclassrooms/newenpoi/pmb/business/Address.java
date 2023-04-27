@@ -25,9 +25,6 @@ public class Address {
 	@Column(name = "adresse_id")
 	private Long id;
 
-    @Column(name = "type_voie")
-    private String laneType;
-
     @Column(name = "numero")
     private int number;
 
@@ -36,7 +33,20 @@ public class Address {
 
     @Column(name = "supplement_adresse")
     private String extra;
+    
+    @Column(name = "code_postal")
+    private String zipCode;
+    
+    @Column(name = "ville")
+    private String city;
 
     @ManyToMany(mappedBy = "addresses")
     private List<User> users;
+    
+    public Address(int number, String street, String zipCode, String city) {
+    	this.number = number;
+    	this.street = street;
+    	this.zipCode = zipCode;
+    	this.city = city;
+    }
 }

@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,7 +48,7 @@ public class User {
 	private String forename;
 
 	@Column(name = "date_naissance")
-	@NotBlank(message = "La date de naissance n'a pas été renseignée.")
+	@PastOrPresent(message = "La date de naissance doit être dans le passé.")
 	private LocalDate dob;
 
 	@ManyToMany
@@ -67,4 +68,11 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Account> accounts;
 
+	public User(String email, String password, String name, String forename, LocalDate dob) {
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.forename = forename;
+		this.dob = dob;
+	}
 }

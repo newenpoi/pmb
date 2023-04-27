@@ -2,6 +2,8 @@ package com.openclassrooms.newenpoi.pmb.business;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,8 +29,9 @@ public class Account {
 	@Column(name = "numero_compte")
     private int accountNumber;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "compte_type")
-    private String accountType;
+    private AccountType accountType;
 
 	@Column(name = "solde")
     private double balance;
@@ -36,4 +39,11 @@ public class Account {
     @ManyToOne()
     @JoinColumn(name = "utilisateur_id")
     private User user;
+    
+    public Account(int accountNumber, double balance) {
+    	this.accountType = AccountType.CHECKING;
+    	
+    	this.accountNumber = accountNumber;
+    	this.balance = balance;
+    }
 }
