@@ -26,7 +26,7 @@ public class Account {
 	@Column(name = "compte_id")
 	private Long id;
 
-	@Column(name = "numero_compte")
+	@Column(name = "numero_compte", unique = true)
     private int accountNumber;
 
 	@Enumerated(EnumType.STRING)

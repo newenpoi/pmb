@@ -1,6 +1,7 @@
 package com.openclassrooms.newenpoi.pmb.business;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +31,7 @@ public class Payment {
 	@Min(value = 1, message = "La somme doit être supérieure ou égale à 1.")
     private double amount;
 
-    private LocalDate delivered;
+    private LocalDateTime delivered;
     
     private String description;
 
@@ -41,4 +42,17 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "emetteur_id")
     private User sender;
+    
+    public Payment(User sender, User receiver) {
+    	this.sender = sender;
+    	this.receiver = receiver;
+    }
+    
+    public Payment(double amount, LocalDateTime delivered, String description, User sender, User receiver) {
+    	this(sender, receiver);
+    	
+    	this.amount = amount;
+    	this.delivered = delivered;
+    	this.description = description;
+    }
 }
