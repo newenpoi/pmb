@@ -31,6 +31,8 @@ public class Payment {
     private double amount;
 
     private LocalDate delivered;
+    
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "receveur_id")
