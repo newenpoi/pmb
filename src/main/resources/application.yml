@@ -1,0 +1,20 @@
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/paymybuddy?useSSL=false
+        username: root
+        password: .Logme1nn
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate.ddl-auto: update
+        generate-ddl: false
+        show-sql: false
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+    servlet:
+        multipart:
+            max-file-size: 8MB
+    thymeleaf:
+        enabled: true
+        prefix: classpath:/templates/
+        suffix: .html
