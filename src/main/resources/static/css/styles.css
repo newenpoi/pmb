@@ -1,7 +1,8 @@
+h1, h2, h3, h4, h5 { margin: 0; }
 
-.bg-green {
-	background-color: #6abd3c;
-}
+.bg-green { background-color: #6abd3c; }
+
+.bg-gray { background-color: #ededed; }
 
 .table-payments-header > div {
 	flex-basis: 0;
@@ -20,6 +21,20 @@
 	font-size: 10pt;
 }
 
+input[type="number"], select { margin-right: .5rem; }
+
+input[type="number"] {
+	width: 128px;
+}
+
+input[type="submit"] {
+	width: 96px;
+}
+
 @media screen and (min-width: 600px) {
+	.header-payments { width: 50% !important; }
+	
 	.table-payments { width: 50% !important; }
+	
+	.form-payment { width: 50% !important; }
 }

@@ -6,14 +6,25 @@
 <body>
 	<th:block th:insert="fragments/general :: header"></th:block>
 	
-	<main class="d-flex justify-content-center align-items-center">
+	<main class="d-flex flex-column justify-content-center align-items-center">
+		
+		<!-- Add Connection -->
+		<div class="header-payments d-flex justify-content-between align-items-center mt-4 w-100">
+			<h4>Send Money</h4>
+			<button class="btn btn-primary">Add Connection</button>
+		</div>
 		
 		<!-- Actions -->
-		<div class="bg-gray">
-			<select name="connection">
+		<form method="post" action="payments/pay" class="form-payment d-flex justify-content-evenly p-5 mt-1 w-100 bg-gray">
+			<select name="connection" class="px-2">
 				<option value="">Select Target</option>
+				<th:block th:each="contact : ${contacts}">
+					<option th:value="${contact.id}" th:text="${#strings.toUpperCase(contact.name + ' ' + contact.forename)}"></option>
+				</th:block>
 			</select>
-		</div>
+			<input type="number" min="1" name="amount" value="5">
+			<input type="submit" value="PAY">
+		</form>
 		
 		<!-- Liste des Transferts -->
 		<div class="table-payments d-flex flex-column mt-4 w-100">
@@ -23,11 +34,30 @@
 				<div class="flex-grow-1">Montant</div>
 			</div>
 			
-			<div class="d-flex flex-row table-payments-data" th:each="payment : ${paiements}">
+			<div class="d-flex flex-row table-payments-data" th:each="payment : ${payments.content}">
 				<div class="flex-grow-1" th:text="${payment.receiver.name}"></div>
 				<div class="flex-grow-1" th:text="${payment.description}"></div>
 				<div class="flex-grow-1" th:text="${payment.amount}"></div>
 			</div>
+		</div>
+		
+		<!-- Pagination -->
+		<div class="d-flex mt-4">
+		    <span th:if="${!payments.hasPrevious()}">
+		        <a th:href="@{/payments}" title="Accueil">Haut de Page</a>
+		    </span>
+		    
+		    <span th:if="${payments.hasPrevious()}">
+		        <a th:href="@{/payments(numPage=${payments.previousPageable().pageNumber}, sort=${sort})}">&lt;&lt; Previous</a>
+		    </span>
+		    
+		    <span th:if="${payments.hasNext()}">
+		        <a th:href="@{/payments(numPage=${payments.nextPageable().pageNumber}, sort=${sort})}">Next &gt;&gt;</a>
+		    </span>
+		    
+		    <span th:if="${payments.totalPages > 1}">
+		        Page <span th:text="${payments.number + 1}"></span> of <span th:text="${payments.totalPages}"></span>
+		    </span>
 		</div>
 	</main>
 	
