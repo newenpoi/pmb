@@ -3,6 +3,23 @@
 	background-color: #6abd3c;
 }
 
-.payments:nth-child(even) {
+.table-payments-header > div {
+	flex-basis: 0;
+	padding-left: .4rem;
+}
+
+.table-payments-data:nth-child(even) {
 	background-color: #ededed;
+}
+
+.table-payments-data > div {
+	flex-basis: 0;
+	padding-left: .4rem;
+	
+	font-family: "Verdana";
+	font-size: 10pt;
+}
+
+@media screen and (min-width: 600px) {
+	.table-payments { width: 50% !important; }
 }
