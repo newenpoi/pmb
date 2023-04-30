@@ -88,6 +88,12 @@ public class InitController implements CommandLineRunner {
 			users.add(u);
 		}
 		
+		users = userDao.saveAll(users);
+		
+		// adds contacts for the first user.
+		users.get(0).getContacts().add(users.get(1));
+		users.get(0).getContacts().add(users.get(2));
+		
 		userDao.saveAll(users);
 	}
 	
