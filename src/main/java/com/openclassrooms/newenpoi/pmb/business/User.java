@@ -30,7 +30,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "utilisateur_id")
-    private Long userId;
+    private Long id;
 	
 	@NotBlank(message = "Une adresse email est requise.")
 	private String email;
