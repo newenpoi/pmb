@@ -1,9 +1,11 @@
 package com.openclassrooms.newenpoi.pmb.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.openclassrooms.newenpoi.pmb.business.Payment;
 
 public interface PaymentService {
-	public List<Payment> recupererPaiements();
+	Page<Payment> recupererPaiements(Pageable pageable);
+	Payment payer(Long idSender, Long idReceiver);
 }
