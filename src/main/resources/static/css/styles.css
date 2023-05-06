@@ -4,6 +4,14 @@ h1, h2, h3, h4, h5 { margin: 0; }
 
 .bg-gray { background-color: #ededed; }
 
+/*
+	Boutons
+*/
+
+.btn-delete {
+	text-decoration: none;
+}
+
 .table-payments-header > div {
 	flex-basis: 0;
 	padding-left: .4rem;

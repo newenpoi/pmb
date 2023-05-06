@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments/general :: headerfiles"></th:block>
+</head>
+<body>
+	<th:block th:insert="fragments/general :: header"></th:block>
+	
+	<main class="d-flex flex-column justify-content-center align-items-center">
+		<!-- Ajout de Contact -->
+		<form method="post" action="contacts/add" class="form-payment d-flex justify-content-evenly p-3 mt-1 w-100 bg-gray">
+			<input type="email" name="email" placeholder="Entrez l'adresse email de la cible." autocomplete="off">
+			<input type="submit" value="Ajouter">
+		</form>
+		
+		<!-- Liste des Contacts -->
+		<div class="table-payments d-flex flex-column mt-4 w-100">
+			<div class="d-flex flex-row bg-green table-payments-header">
+				<div class="flex-grow-1">Nom</div>
+				<div class="flex-grow-1">Prénom</div>
+				<div class="flex-grow-1">Action</div>
+			</div>
+			
+			<div class="d-flex flex-row table-payments-data" th:each="contact : ${contacts.content}">
+				<div class="flex-grow-1" th:text="${contact.name}"></div>
+				<div class="flex-grow-1" th:text="${contact.forename}"></div>
+				<div class="flex-grow-1"><a th:href="@{/contacts/delete(id=${contact.id})}" title="Supprimer ce Contact" class="btn-delete">Supprimer</a></div>
+			</div>
+		</div>
+	</main>
+	
+	<th:block th:insert="fragments/general :: footer"></th:block>
+</body>
+</html>

@@ -10,4 +10,6 @@ import com.openclassrooms.newenpoi.pmb.business.User;
 public interface UserService {
 	List<User> recupererContacts(Long idUser);
 	Page<User> recupererPageContacts(Long idUser, Pageable pageable);
+	
+	User ajouterContact(Long idUser, String email);
 }

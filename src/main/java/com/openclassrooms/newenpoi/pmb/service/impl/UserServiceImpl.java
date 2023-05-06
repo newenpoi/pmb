@@ -20,11 +20,26 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<User> recupererContacts(Long idUser) {
-		return userDao.findUserContactsById(idUser);
+		
+		List<User> users = userDao.findUserContactsById(idUser);
+		
+		return users;
 	}
 
 	@Override
 	public Page<User> recupererPageContacts(Long idUser, Pageable pageable) {
 		return userDao.findUserPage(idUser, pageable);
+	}
+
+	@Override
+	public User ajouterContact(Long idUser, String email) {
+		User user = userDao.findById(idUser).orElse(null);
+		User contact = userDao.findByEmail();
+		
+		// Si l'utilisateur n'existe pas ou le contact n'existe pas.
+		if (user == null || contact == null) return null;
+		
+		user.getContacts().add(contact);
+		return userDao.save(user);
 	}
 }
