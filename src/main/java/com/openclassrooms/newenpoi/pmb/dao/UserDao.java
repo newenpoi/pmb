@@ -17,5 +17,5 @@ public interface UserDao extends JpaRepository<User, Long> {
 	@Query("SELECT c FROM User u JOIN u.contacts c WHERE u.id = :idUser")
 	Page<User> findUserPage(@Param("idUser") Long idUser, Pageable pageable);
 	
-	User findByEmail();
+	User findByEmail(String email);
 }

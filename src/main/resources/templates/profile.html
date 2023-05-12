@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments/general :: headerfiles"></th:block>
+</head>
+<body>
+	<th:block th:insert="fragments/general :: header"></th:block>
+	
+	<main class="d-flex flex-column justify-content-center align-items-center">
+		<!-- Inscription -->
+		<form method="post" action="profile/update" class="form-payment d-flex justify-content-evenly p-3 mt-1 w-100 bg-gray">
+			
+			<div class="register-personal">
+				<input type="text" name="lastName" placeHolder="Enter your last name.">
+				<input type="text" name="forename" placeHolder="Enter your first name.">
+				<input type="text" name="dob" placeHolder="Enter your date of birth.">
+			</div>
+			
+			<div class="register-address">
+				<input type="text" name="address.number" placeHolder="Enter your street number.">
+				<input type="text" name="address.street" placeHolder="Enter the street name.">
+				<input type="text" name="address.extra" placeHolder="Extra information for street address.">
+				<input type="text" name="address.zipCode" placeHolder="Zipcode of the city in which you reside.">
+				<input type="text" name="address.city" placeHolder="City in which you reside.">
+			</div>
+			
+			<input type="submit" value="Modify">
+		</form>
+	</main>
+	
+	<th:block th:insert="fragments/general :: footer"></th:block>
+</body>
+</html>

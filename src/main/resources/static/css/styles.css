@@ -1,3 +1,12 @@
+html, body { height: 100%; margin: 0; padding: 0; }
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+main { flex-grow: 1; }
+
 h1, h2, h3, h4, h5 { margin: 0; }
 
 .bg-green { background-color: #6abd3c; }
@@ -29,6 +38,12 @@ h1, h2, h3, h4, h5 { margin: 0; }
 	font-size: 10pt;
 }
 
+.form-login, .form-register {
+	border-radius: .3rem;
+}
+
+.form-control { outline: none; box-shadow: none !important; }
+
 input[type="number"], select { margin-right: .5rem; }
 
 input[type="number"] {
@@ -45,4 +60,8 @@ input[type="submit"] {
 	.table-payments { width: 50% !important; }
 	
 	.form-payment { width: 50% !important; }
+	
+	.form-login { width: 384px !important; }
+	
+	.form-register { width: 384px !important; }
 }
