@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments/general :: headerfiles"></th:block>
+</head>
+<body>
+	<th:block th:insert="fragments/general :: header"></th:block>
+	
+	<main class="d-flex flex-column justify-content-center align-items-center h-100">
+		<!-- Inscription -->
+		<form method="post" action="login" class="form-login d-flex flex-column justify-content-center p-3 mt-1 w-100 h-50 bg-gray">
+			<p>Vous devez vous connecter pour utiliser notre service.</p>
+			<input type="email" name="email" placeholder="Email" autocomplete="off" class="mb-2">
+			<input type="password" name="password" placeHolder="Password" class="mb-2">
+			<input type="submit" value="Connexion" class="w-100">
+		</form>
+	</main>
+	
+	<th:block th:insert="fragments/general :: footer"></th:block>
+</body>
+</html>
