@@ -8,25 +8,28 @@
 	
 	<main class="d-flex flex-column justify-content-center align-items-center">
 		<!-- Inscription -->
-		<form method="post" action="register/validate" class="form-register d-flex flex-column justify-content-center p-3 mt-1 w-100 bg-gray">
+		<form method="post" th:action="@{/register/validate}" th:object="${utilisateur}" class="form-register d-flex flex-column justify-content-center p-3 mt-1 w-100 bg-gray">
 			
 			<div class="register-credentials form-group mb-4">
-				<input type="email" name="email" placeholder="Email" autocomplete="off" class="form-control mb-1">
-				<input type="password" name="password" placeHolder="Mot de Passe" class="form-control mb-1">
+				<input type="email" name="email" placeholder="Email" autocomplete="off" class="form-control mb-1" value="loid.forger@eden.com">
+				<small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Cette adresse est invalide.</small>
+				
+				<input type="password" name="password" placeHolder="Mot de Passe" class="form-control mb-1" value="somedummypassword">
+				<small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Cette adresse est invalide.</small>
 			</div>
 			
 			<div class="register-personal form-group mb-4">
-				<input type="text" name="lastName" placeHolder="Nom" class="form-control mb-1">
-				<input type="text" name="forename" placeHolder="Prénom" class="form-control mb-1">
-				<input type="text" name="dob" placeHolder="Date de Naissance (JJ/MM/AAAA)" class="form-control mb-1">
+				<input type="text" name="lastName" placeHolder="Nom" class="form-control mb-1" value="Forger">
+				<input type="text" name="forename" placeHolder="Prénom" class="form-control mb-1" value="Loid">
+				<input type="text" name="dob" placeHolder="Date de Naissance (JJ/MM/AAAA)" class="form-control mb-1" value="05/02/1986">
 			</div>
 			
 			<div class="register-address form-group mb-4">
-				<input type="text" name="address.number" placeHolder="Numéro" class="form-control mb-1">
-				<input type="text" name="address.street" placeHolder="Nom de la Rue" class="form-control mb-1">
+				<input type="text" name="address.number" placeHolder="Numéro" class="form-control mb-1" value="868">
+				<input type="text" name="address.street" placeHolder="Nom de la Rue" class="form-control mb-1" value="Rue Edmond Dones">
 				<input type="text" name="address.extra" placeHolder="Informations Supplémentaires" class="form-control mb-1">
-				<input type="text" name="address.zipCode" placeHolder="Code Postal" class="form-control mb-1">
-				<input type="text" name="address.city" placeHolder="Ville" class="form-control mb-1">
+				<input type="text" name="address.zipCode" placeHolder="Code Postal" class="form-control mb-1" value="7800">
+				<input type="text" name="address.city" placeHolder="Ville" class="form-control mb-1" value="Berlint">
 			</div>
 			
 			<input type="submit" value="Register" class="w-100">
