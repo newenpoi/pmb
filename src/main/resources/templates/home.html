@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments/general :: headerfiles"></th:block>
+</head>
+<body>
+	<th:block th:insert="fragments/general :: header"></th:block>
+	
+	<main class="d-flex flex-column justify-content-center align-items-center h-100">
+		<h2 th:if="${inscription == null}">Bienvenue sur Pay My Buddy !</h2>
+		<h3 th:if="${inscription}" class="text-green">Votre inscription a bien été prise en compte !</h3>
+	</main>
+	
+	<th:block th:insert="fragments/general :: footer"></th:block>
+</body>
+</html>
