@@ -8,7 +8,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
     
 	@GetMapping("/user-login")
+    public ModelAndView connexionGet() {
+        ModelAndView mav = new ModelAndView("login");
+        return mav;
+    }
+	
+	@GetMapping("/user-login/failure")
     public ModelAndView getCustomLoginForm() {
-        return new ModelAndView("login");
+		ModelAndView mav = connexionGet();
+        mav.addObject("error", true);
+        
+        return mav;
     }
 }

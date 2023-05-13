@@ -6,11 +6,15 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.newenpoi.pmb.business.Address;
 import com.openclassrooms.newenpoi.pmb.business.User;
+import com.openclassrooms.newenpoi.pmb.dao.AddressDao;
 import com.openclassrooms.newenpoi.pmb.dao.UserDao;
 import com.openclassrooms.newenpoi.pmb.dto.UserForm;
 import com.openclassrooms.newenpoi.pmb.service.UserService;
@@ -20,9 +24,10 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
 	private final UserDao userDao;
+	private final AddressDao addressDao;
 	
 	@Override
 	public List<User> recupererContacts(Long idUser) {
@@ -52,12 +57,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User register(UserForm userForm) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		List<Address> addresses = new ArrayList<>();
 		
 		LocalDate dob = DateUtils.dobToLocalDate(userForm.getDob());
 		User user = new User(userForm.getEmail(), encoder.encode(userForm.getPassword()), userForm.getForename(), userForm.getLastName(), dob);
-		
 	    Address address = userForm.getAddress();
-	    List<Address> addresses = new ArrayList<>();
+	    
+	    // Il faut penser à sauver l'adresse avant de l'ajouter à l'utilisateur et éviter un TransientObjectException.
+	    address = addressDao.save(address);
 	    
 	    addresses.add(address);
 	    user.setAddresses(addresses);
@@ -90,5 +97,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User recupererUtilisateur(Long idUser) {
 		return userDao.findById(idUser).orElse(null);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User user = userDao.findByEmail(email);
+        
+        if (user == null) throw new UsernameNotFoundException("Les identifiants sont incorrects.");
+        
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
 	}
 }

@@ -8,11 +8,20 @@
 	
 	<main class="d-flex flex-column justify-content-center align-items-center h-100">
 		<!-- Inscription -->
-		<form method="post" action="login" class="form-login d-flex flex-column justify-content-center p-3 mt-1 w-100 h-50 bg-gray">
+		<form method="post" th:action="@{/login}" class="form-login d-flex flex-column justify-content-center p-3 mt-1 w-100 h-50 bg-gray">
+			
 			<p>Vous devez vous connecter pour utiliser notre service.</p>
-			<input type="email" name="email" placeholder="Email" autocomplete="off" class="mb-2">
-			<input type="password" name="password" placeHolder="Password" class="mb-2">
-			<input type="submit" value="Connexion" class="w-100">
+			
+			<div class="register-credentials form-group mb-4">
+				<input type="email" name="email" placeholder="Email" autocomplete="off" class="form-control mb-2">
+				<input type="password" name="password" placeHolder="Password" class="form-control mb-2">
+				<input type="submit" value="Connexion" class="form-control w-100">
+			</div>
+			
+			<div th:if="${error}" class="register-credentials form-group mb-4">
+				<p class="text-danger">Ces identifiants sont parfaitement incorrects.</p>
+			</div>
+			
 		</form>
 	</main>
 	
