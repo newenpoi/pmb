@@ -16,6 +16,7 @@ import com.openclassrooms.newenpoi.pmb.business.Address;
 import com.openclassrooms.newenpoi.pmb.business.User;
 import com.openclassrooms.newenpoi.pmb.dao.AddressDao;
 import com.openclassrooms.newenpoi.pmb.dao.UserDao;
+import com.openclassrooms.newenpoi.pmb.dto.UserDTO;
 import com.openclassrooms.newenpoi.pmb.dto.UserForm;
 import com.openclassrooms.newenpoi.pmb.service.UserService;
 import com.openclassrooms.newenpoi.pmb.util.DateUtils;
@@ -43,14 +44,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public User ajouterContact(Long idUser, String email) {
-		User user = userDao.findById(idUser).orElse(null);
-		User contact = userDao.findByEmail(email);
+	public User ajouterContact(String emailUser, String emailContact) {
+		User user = userDao.findByEmail(emailUser);
+		User contact = userDao.findByEmail(emailContact);
 		
 		// Si l'utilisateur n'existe pas ou le contact n'existe pas.
 		if (user == null || contact == null) return null;
 		
 		user.getContacts().add(contact);
+		
 		return userDao.save(user);
 	}
 
@@ -97,6 +99,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public User recupererUtilisateur(Long idUser) {
 		return userDao.findById(idUser).orElse(null);
+	}
+	
+	@Override
+	public User recupererUtilisateur(String email) {
+		return userDao.findByEmail(email);
+	}
+	
+	@Override
+	public UserDTO recupererUtilisateurDTO(String email) {
+		User u = userDao.findByEmail(email);
+		
+		if (u != null) return new UserDTO(u);
+		
+		return null;
 	}
 
 	@Override
