@@ -8,31 +8,47 @@
 	
 	<main class="d-flex flex-column justify-content-center align-items-center">
 		<!-- Inscription -->
-		<form method="post" th:action="@{/register/validate}" th:object="${utilisateur}" class="form-register d-flex flex-column justify-content-center p-3 mt-1 w-100 bg-gray">
+		<form method="post" th:action="@{/register/validate}" th:object="${utilisateur}" class="form-register d-flex flex-column justify-content-center p-3 mt-1 w-100 border border-secondary">
 			
 			<div class="register-credentials form-group mb-4">
-				<input type="email" name="email" placeholder="Email" autocomplete="off" class="form-control mb-1" value="loid.forger@eden.com">
+				<label for="i-email" class="label-form">Email :</label>
+				<input type="email" id="i-email" name="email" placeholder="Email" autocomplete="off" class="form-control mb-1" value="loid.forger@eden.com">
 				<small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Cette adresse est invalide.</small>
 				
-				<input type="password" name="password" placeHolder="Mot de Passe" class="form-control mb-1" value="somedummypassword">
+				<label for="i-passwd" class="label-form">Password :</label>
+				<input type="password" id="i-passwd" name="password" placeHolder="Mot de Passe" class="form-control mb-1" value="somedummypassword">
 				<small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Cette adresse est invalide.</small>
 			</div>
 			
 			<div class="register-personal form-group mb-4">
-				<input type="text" name="lastName" placeHolder="Nom" class="form-control mb-1" value="Forger">
-				<input type="text" name="forename" placeHolder="Prénom" class="form-control mb-1" value="Loid">
-				<input type="text" name="dob" placeHolder="Date de Naissance (JJ/MM/AAAA)" class="form-control mb-1" value="05/02/1986">
+				<label for="i-lastname" class="label-form">Last Name :</label>
+				<input type="text" id="i-lastname" name="lastName" placeHolder="Last Name" class="form-control mb-1" value="Forger">
+				
+				<label for="i-firstname" class="label-form">First Name :</label>
+				<input type="text" id="i-firstname" name="forename" placeHolder="First Name" class="form-control mb-1" value="Loid">
+				
+				<label for="i-dob" class="label-form">Date of Birth :</label>
+				<input type="text" id="i-dob" name="dob" placeHolder="Date of Birth (DD/MM/YYYY)" class="form-control mb-1" value="05/02/1986">
 			</div>
 			
 			<div class="register-address form-group mb-4">
-				<input type="text" name="address.number" placeHolder="Numéro" class="form-control mb-1" value="868">
-				<input type="text" name="address.street" placeHolder="Nom de la Rue" class="form-control mb-1" value="Rue Edmond Dones">
-				<input type="text" name="address.extra" placeHolder="Informations Supplémentaires" class="form-control mb-1">
-				<input type="text" name="address.zipCode" placeHolder="Code Postal" class="form-control mb-1" value="7800">
-				<input type="text" name="address.city" placeHolder="Ville" class="form-control mb-1" value="Berlint">
+				<label for="i-nb" class="label-form">Street Number :</label>
+				<input type="text" id="i-nb" name="address.number" placeHolder="Street Number" class="form-control mb-1" value="868">
+				
+				<label for="i-street" class="label-form">Street Name :</label>
+				<input type="text" id="i-street" name="address.street" placeHolder="Street Name" class="form-control mb-1" value="Rue Edmond Dones">
+				
+				<label for="i-extra" class="label-form">Extra Information :</label>
+				<input type="text" id="i-extra" name="address.extra" class="form-control mb-1">
+				
+				<label for="i-zip" class="label-form">Zip Code :</label>
+				<input type="text" id="i-zip" name="address.zipCode" placeHolder="Zip Code" class="form-control mb-1" value="7800">
+				
+				<label for="i-city" class="label-form">City :</label>
+				<input type="text" id="i-city" name="address.city" placeHolder="City" class="form-control mb-1" value="Berlint">
 			</div>
 			
-			<input type="submit" value="Register" class="w-100">
+			<input type="submit" value="Register" class="btn btn-primary w-100">
 		</form>
 	</main>
 	
