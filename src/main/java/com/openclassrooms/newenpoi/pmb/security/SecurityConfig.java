@@ -18,12 +18,22 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 	
+    /**
+     * Autorize required urls.
+     * Sets up login parameters and redirections.
+     * Sets up logout parameters and redirections.
+     * Builds the configuration.
+     * @param http
+     * @return
+     * @throws Exception
+     */
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 	        .csrf(csrf -> csrf.disable())
-	        .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/payments", "/contacts", "/register/**", "register/validate", "/profile", "/css/**").permitAll().anyRequest().authenticated())
+	        .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/user-login", "/register/**", "/css/**").permitAll().anyRequest().authenticated())
 	        .formLogin(formLogin -> formLogin.loginPage("/user-login").usernameParameter("email").loginProcessingUrl("/login").defaultSuccessUrl("/payments").failureUrl("/user-login/failure").permitAll())
+	        .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll())
 	        .build();
 	}
 }
