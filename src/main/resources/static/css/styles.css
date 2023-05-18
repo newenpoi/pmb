@@ -9,6 +9,10 @@ main { flex-grow: 1; }
 
 h1, h2, h3, h4, h5 { margin: 0; }
 
+h5 { font-size: 12pt; }
+
+p { margin: 0; }
+
 .bg-green { background-color: #6abd3c; }
 
 .bg-gray { background-color: #ededed; }
@@ -17,8 +21,16 @@ h1, h2, h3, h4, h5 { margin: 0; }
 	Boutons
 */
 
+.navbar-brand { border: none; }
+
+.navbar-brand:hover { background-color: #83e94b; }
+
 .btn-delete {
 	text-decoration: none;
+}
+
+.btn-pay {
+	margin-left: .4rem;
 }
 
 .table-payments-header > div {
@@ -42,7 +54,18 @@ h1, h2, h3, h4, h5 { margin: 0; }
 	border-radius: .3rem;
 }
 
+.form-register div > input {
+	font-size: 11pt;
+	padding: .3rem .5rem;
+}
+
 .form-control { outline: none; box-shadow: none !important; }
+
+.label-form {
+	font-size: 10pt;
+	font-family: "Verdana";
+	padding-left: .2rem;
+}
 
 input[type="number"], select { margin-right: .5rem; }
 
@@ -54,14 +77,18 @@ input[type="submit"] {
 	width: 96px;
 }
 
+/*
+	Texte
+*/
+
 @media screen and (min-width: 600px) {
-	.header-payments { width: 50% !important; }
-	
-	.table-payments { width: 50% !important; }
-	
-	.form-payment { width: 50% !important; }
-	
 	.form-login { width: 384px !important; }
 	
 	.form-register { width: 384px !important; }
+	
+	main { width: 30%; margin: 0 auto; }
+}
+
+@media screen and (min-width: 900px) {
+	main { margin: 0 auto; }
 }
