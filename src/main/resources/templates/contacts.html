@@ -6,12 +6,24 @@
 <body>
 	<th:block th:insert="fragments/general :: header"></th:block>
 	
-	<main class="d-flex flex-column justify-content-center align-items-center">
+	<main class="d-flex flex-column justify-content-center">
 		<!-- Ajout de Contact -->
-		<form method="post" action="contacts/add" class="form-payment d-flex justify-content-evenly p-3 mt-1 w-100 bg-gray">
+		<form method="post" th:action="@{/contacts/add}" class="form-payment d-flex justify-content-evenly p-3 mt-1 w-100 bg-gray">
 			<input type="email" name="email" placeholder="Entrez l'adresse email de la cible." autocomplete="off">
 			<input type="submit" value="Ajouter">
 		</form>
+		
+		<div th:if="${contact}" class="pl-2 mt-2">
+			<p class="text-success">Contact <span th:text="${contact}" class="text-info"></span> ajouté avec succès !</p>
+		</div>
+		
+		<div th:if="${error} and ${error == 1}" class="pl-2 mt-2">
+			<p class="text-danger">Impossible de s'ajouter soi-même.</p>
+		</div>
+		
+		<div th:if="${error} and ${error == 2}" class="pl-2 mt-2">
+			<p class="text-danger">Cet utilisateur n'existe pas.</p>
+		</div>
 		
 		<!-- Liste des Contacts -->
 		<div class="table-payments d-flex flex-column mt-4 w-100">
