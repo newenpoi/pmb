@@ -1,33 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:import="org.thymeleaf.expression.Numbers">
 <head>
 	<th:block th:insert="fragments/general :: headerfiles"></th:block>
 </head>
 <body>
 	<th:block th:insert="fragments/general :: header"></th:block>
 	
-	<main class="d-flex flex-column justify-content-center align-items-center">
+	<main class="d-flex flex-column justify-content-center">
 		
 		<!-- Add Connection -->
-		<div class="header-payments d-flex justify-content-between align-items-center mt-4 w-100">
-			<h4>Send Money</h4>
-			<button class="btn btn-primary">Add Connection</button>
+		<div class="d-flex justify-content-between align-items-center mt-4 w-100">
+			<h5>Send Money</h5>
+			<a href="/contacts" title="Contacts" class="btn btn-primary">Add Connection</a>
 		</div>
 		
 		<!-- Actions -->
-		<form method="post" action="payments/pay" class="form-payment d-flex justify-content-evenly p-5 mt-1 w-100 bg-gray">
-			<select name="connection" class="px-2">
+		<form method="post" th:action="@{/payments/pay}" th:object="${paymentForm}" class="form-payment d-flex justify-content-evenly p-5 mt-1 w-100 bg-gray">
+			<select name="connection" class="px-2 form-control">
 				<option value="">Select Target</option>
 				<th:block th:each="contact : ${contacts}">
 					<option th:value="${contact.id}" th:text="${#strings.toUpperCase(contact.name + ' ' + contact.forename)}"></option>
 				</th:block>
 			</select>
-			<input type="number" min="1" name="amount" value="5">
-			<input type="submit" value="PAY">
+			<input type="number" min="1" name="amount" value="5" class="form-control">
+			<input type="text" name="description" max="255" class="form-control" placeholder="Description" autocomplete="off">
+			<input type="submit" value="PAY" class="btn-pay form-control bg-info">
 		</form>
+		
+		<div th:if="${payment}" class="pl-2 mt-2">
+			<p class="text-success">Paiement envoyé avec succès.</p>
+		</div>
+		
+		<div th:if="${error}" class="pl-2 mt-2">
+			<p class="text-danger">Une erreur est survenue.</p>
+		</div>
 		
 		<!-- Liste des Transferts -->
 		<div class="table-payments d-flex flex-column mt-4 w-100">
+			<h5 class="mb-2">My Transactions</h5>
+			
 			<div class="d-flex flex-row bg-green table-payments-header">
 				<div class="flex-grow-1">Contact</div>
 				<div class="flex-grow-1">Description</div>
@@ -37,7 +48,7 @@
 			<div class="d-flex flex-row table-payments-data" th:each="payment : ${payments.content}">
 				<div class="flex-grow-1" th:text="${payment.receiver.name}"></div>
 				<div class="flex-grow-1" th:text="${payment.description}"></div>
-				<div class="flex-grow-1" th:text="${payment.amount}"></div>
+				<div class="flex-grow-1" th:text="${#numbers.formatDecimal(payment.amount, 0, 0) + '€'}"></div>
 			</div>
 		</div>
 		

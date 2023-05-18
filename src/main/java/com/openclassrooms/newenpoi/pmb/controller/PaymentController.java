@@ -2,15 +2,18 @@ package com.openclassrooms.newenpoi.pmb.controller;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.openclassrooms.newenpoi.pmb.business.Payment;
+import com.openclassrooms.newenpoi.pmb.business.User;
+import com.openclassrooms.newenpoi.pmb.dto.PaymentForm;
 import com.openclassrooms.newenpoi.pmb.service.PaymentService;
 import com.openclassrooms.newenpoi.pmb.service.UserService;
 
@@ -29,30 +32,36 @@ public class PaymentController {
 	public ModelAndView getPayments(
 			@PageableDefault(size = NB_PAIEMENT_PAR_PAGE, sort = "delivered") Pageable page,
 			@RequestParam(name = "numPage", defaultValue = "0") int numPage,
-			@RequestParam(name = "sort", defaultValue = "delivered") String sort) {
+			@RequestParam(name = "sort", defaultValue = "delivered") String sort, Authentication authentication) {
 		
-		// TODO : Authentication process.
-		Long idUser = 7L;
+		User u = userService.recupererUtilisateur(authentication.getName());
 		
 		ModelAndView mav = new ModelAndView("payments");
-		mav.addObject("contacts", userService.recupererContacts(idUser));
-		mav.addObject("paiements", mav.addObject("payments", paymentService.recupererPaiements(page.withPage(numPage))));
+		mav.addObject("contacts", userService.recupererContacts(u.getId()));
+		mav.addObject("paiements", mav.addObject("payments", paymentService.recupererPaiements(u, page.withPage(numPage))));
 		
 		return mav;
 	}
 	
 	@PostMapping("/payments/pay")
-	public RedirectView pay(@RequestParam Long connection, Model model) {
-		// TODO : Authentication process.
-		Long idUser = 7L;
+	public ModelAndView pay(@ModelAttribute("paymentForm") PaymentForm paymentForm, RedirectAttributes redirectAttributes, Authentication authentication) {
 		
-		// Call service.
-		Payment p = paymentService.payer(idUser, connection);
+		// Récupère l'utilisateur authentifié.
+		User u = userService.recupererUtilisateur(authentication.getName());
 		
-		// Add data to the model.
-		model.addAttribute("payment", p);
-
-		// Redirect to the payments view with a query parameter
-		return new RedirectView("/payments");
+		// On ne peut s'envoyer de l'argent à soi-même.
+		if (u.getId() == paymentForm.getConnection()) redirectAttributes.addFlashAttribute("error", true);
+		else {
+			
+			// Appelle le service pour procéder au paiement.
+			Payment p = paymentService.payer(u, paymentForm.getConnection(), paymentForm.getDescription(), paymentForm.getAmount());
+			
+			// Définie les attributs en fonction du résultat de l'expression.
+			if (p == null) redirectAttributes.addFlashAttribute("error", true);
+			else redirectAttributes.addFlashAttribute("payment", p);
+		}
+		
+		// Redirige vers la vue.
+		return new ModelAndView("redirect:/payments");
 	}
 }
