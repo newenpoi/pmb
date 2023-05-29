@@ -23,7 +23,10 @@ p { margin: 0; }
 
 .navbar-brand { border: none; }
 
-.navbar-brand:hover { background-color: #83e94b; }
+.bg-green:hover {
+	background: rgb(39,223,63);
+}
+
 
 .btn-delete {
 	text-decoration: none;
