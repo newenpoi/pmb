@@ -14,6 +14,7 @@ public interface UserService {
 	Page<User> recupererPageContacts(Long idUser, Pageable pageable);
 	
 	User ajouterContact(String emailUser, String emailContact);
+	User supprimerContact(User u, Long idContact);
 	User register(UserForm userForm);
 	User modifierProfil(Long idUser, UserForm userForm);
 	

@@ -1,6 +1,7 @@
 package com.openclassrooms.newenpoi.pmb.controller;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -30,10 +31,10 @@ public class PaymentController {
 	
 	@GetMapping("/payments")
 	public ModelAndView getPayments(
-			@PageableDefault(size = NB_PAIEMENT_PAR_PAGE, sort = "delivered") Pageable page,
-			@RequestParam(name = "numPage", defaultValue = "0") int numPage,
-			@RequestParam(name = "sort", defaultValue = "delivered") String sort, Authentication authentication) {
+			@PageableDefault(size = NB_PAIEMENT_PAR_PAGE, sort = "delivered", direction = Sort.Direction.DESC) Pageable page,
+			@RequestParam(name = "numPage", defaultValue = "0") int numPage, Authentication authentication) {
 		
+		// Je récupère les informations de mon utilisateur authentifié.
 		User u = userService.recupererUtilisateur(authentication.getName());
 		
 		ModelAndView mav = new ModelAndView("payments");
@@ -46,13 +47,13 @@ public class PaymentController {
 	@PostMapping("/payments/pay")
 	public ModelAndView pay(@ModelAttribute("paymentForm") PaymentForm paymentForm, RedirectAttributes redirectAttributes, Authentication authentication) {
 		
-		// Récupère l'utilisateur authentifié.
+		// Je récupère les informations de mon utilisateur authentifié.
 		User u = userService.recupererUtilisateur(authentication.getName());
 		
 		// On ne peut s'envoyer de l'argent à soi-même.
 		if (u.getId() == paymentForm.getConnection()) redirectAttributes.addFlashAttribute("error", true);
 		else {
-			
+
 			// Appelle le service pour procéder au paiement.
 			Payment p = paymentService.payer(u, paymentForm.getConnection(), paymentForm.getDescription(), paymentForm.getAmount());
 			

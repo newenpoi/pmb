@@ -32,21 +32,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	
 	@Override
 	public List<User> recupererContacts(Long idUser) {
-		
-		List<User> users = userDao.findUserContactsById(idUser);
-		
-		return users;
+		return userDao.findContactsByUserId(idUser);
 	}
 
 	@Override
 	public Page<User> recupererPageContacts(Long idUser, Pageable pageable) {
-		return userDao.findUserPage(idUser, pageable);
+		return userDao.findContactsByUserId(idUser, pageable);
 	}
 
 	@Override
 	public User ajouterContact(String emailUser, String emailContact) {
 		User user = userDao.findByEmail(emailUser);
 		User contact = userDao.findByEmail(emailContact);
+		
+		// Si l'utilisateur et le contact existent et que l'utilisateur contient déjà le contact.
+		if (user != null && contact != null && user.getContacts().contains(contact)) return null;
 		
 		// Si l'utilisateur n'existe pas ou le contact n'existe pas.
 		if (user == null || contact == null) return null;
@@ -55,22 +55,41 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		
 		return userDao.save(user);
 	}
+	
+	/**
+	 * Récupère et supprime le contact d'un utilisateur donné.
+	 */
+	@Override
+	public User supprimerContact(User u, Long idContact) {
+		// Récupère le contact qu'on souhaite supprimer.
+		User contact = userDao.findById(idContact).orElse(null);
+		if (contact == null) return null;
+		
+		// Supprimer le contact de notre utilisateur.
+		u.getContacts().remove(contact);
+		
+		// Persistance des données.
+		return userDao.save(u);
+	}
 
+	/**
+	 * Remarque, pour le moment présent on s'occupe de gérer une seule adresse postale.
+	 */
 	@Override
 	public User register(UserForm userForm) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		List<Address> addresses = new ArrayList<>();
 		
 		LocalDate dob = DateUtils.dobToLocalDate(userForm.getDob());
-		User user = new User(userForm.getEmail(), encoder.encode(userForm.getPassword()), userForm.getForename(), userForm.getLastName(), dob);
+		User user = new User(userForm.getEmail(), encoder.encode(userForm.getPassword()), userForm.getForename(), userForm.getLastName(), dob, 1000);
 	    Address address = userForm.getAddress();
-	    
+
 	    // Il faut penser à sauver l'adresse avant de l'ajouter à l'utilisateur et éviter un TransientObjectException.
 	    address = addressDao.save(address);
 	    
 	    addresses.add(address);
 	    user.setAddresses(addresses);
-		
+
 		return userDao.save(user);
 	}
 
@@ -111,10 +130,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		User u = userDao.findByEmail(email);
 		
 		if (u != null) return new UserDTO(u);
-		
 		return null;
 	}
 
+	/**
+	 * Cette méthode est privilégiée pour la gestion d'un custom UserDetails.
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user = userDao.findByEmail(email);

@@ -9,7 +9,7 @@
 	<main class="d-flex flex-column justify-content-center">
 		<!-- Ajout de Contact -->
 		<form method="post" th:action="@{/contacts/add}" class="form-payment d-flex justify-content-evenly p-3 mt-1 w-100 bg-gray">
-			<input type="email" name="email" placeholder="Entrez l'adresse email de la cible." autocomplete="off">
+			<input type="email" name="email" placeholder="elon.musk@gmail.com" autocomplete="off">
 			<input type="submit" value="Ajouter">
 		</form>
 		
@@ -22,7 +22,11 @@
 		</div>
 		
 		<div th:if="${error} and ${error == 2}" class="pl-2 mt-2">
-			<p class="text-danger">Cet utilisateur n'existe pas.</p>
+			<p class="text-danger">Cet utilisateur ne peut être ajouté ou n'existe pas.</p>
+		</div>
+		
+		<div th:if="${error} and ${error == 3}" class="pl-2 mt-2">
+			<p class="text-danger">Impossible de supprimer ce contact.</p>
 		</div>
 		
 		<!-- Liste des Contacts -->
@@ -36,9 +40,24 @@
 			<div class="d-flex flex-row table-payments-data" th:each="contact : ${contacts.content}">
 				<div class="flex-grow-1" th:text="${contact.name}"></div>
 				<div class="flex-grow-1" th:text="${contact.forename}"></div>
-				<div class="flex-grow-1"><a th:href="@{/contacts/delete(id=${contact.id})}" title="Supprimer ce Contact" class="btn-delete">Supprimer</a></div>
+				<div class="flex-grow-1"><a th:href="@{/contacts/delete(idContact=${contact.id})}" title="Supprimer ce Contact" class="btn-delete">Supprimer</a></div>
 			</div>
 		</div>
+		
+		<ul class="pagination mt-4 justify-content-center">
+			<li th:if="${contacts.hasPrevious()}" class="page-item">
+		        <a class="page-link" th:href="@{/contacts(numPage=${contacts.previousPageable().pageNumber})}">PREVIOUS</a>
+			</li>
+		    
+		    <!-- Loop to display page numbers. -->
+		    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, contacts.totalPages - 1)}" th:classappend="${contacts.number == pageNumber} ? 'page-item disabled'">
+		        <a class="page-link" th:href="@{/contacts(numPage=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+		    </li>
+		    
+		    <li th:if="${contacts.hasNext()}" class="page-item">
+		        <a class="page-link" th:href="@{/contacts(numPage=${contacts.nextPageable().pageNumber})}">NEXT</a>
+		    </li>
+		</ul>
 	</main>
 	
 	<th:block th:insert="fragments/general :: footer"></th:block>
