@@ -53,7 +53,7 @@ public class HomeControllerTest {
 	public void setup() {
 		mock = MockMvcBuilders.standaloneSetup(indexHomeController).build();
 		
-		// Nécesaire dans le contexte d'authentification.
+		// Nécesaire dans le contexte d'authentification (applique un `configurer` dans notre cas spécifique).
 		this.mock = MockMvcBuilders.webAppContextSetup(this.context).apply(springSecurity()).build();
 	}
 	
@@ -70,7 +70,7 @@ public class HomeControllerTest {
         UserDetails userDetails = new org.springframework.security.core.userdetails.User("loid.forger@eden.com", "logme1nn", new ArrayList<>());
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(userDetails);
         
-        // Set the authentication in SecurityContextHolder
+        // Définie l'authentification dans le contexte SecurityContextHolder.
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         

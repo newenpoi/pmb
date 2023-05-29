@@ -90,14 +90,14 @@ public class UserServiceTest {
     	// Given.
     	Long idUser = 1L;
     	List<User> expected = Arrays.asList(new User(), new User());
-        when(userDao.findUserContactsById(idUser)).thenReturn(expected);
+        when(userDao.findContactsByUserId(idUser)).thenReturn(expected);
         
         // When.
         List<User> actual = userService.recupererContacts(idUser);
         
         // Then.
         assertEquals(expected, actual);
-        verify(userDao, times(1)).findUserContactsById(idUser);
+        verify(userDao, times(1)).findContactsByUserId(idUser);
     }
     
     @Test
@@ -105,14 +105,14 @@ public class UserServiceTest {
     	// Given.
     	Long idUser = 1L;
     	Page<User> expected = new PageImpl<>(Arrays.asList(new User(), new User()));
-        when(userDao.findUserPage(idUser, pageable)).thenReturn(expected);
+        when(userDao.findContactsByUserId(idUser, pageable)).thenReturn(expected);
         
         // When.
         Page<User> actual = userService.recupererPageContacts(idUser, pageable);
         
         // Then.
         assertEquals(expected, actual);
-        verify(userDao, times(1)).findUserPage(idUser, pageable);
+        verify(userDao, times(1)).findContactsByUserId(idUser, pageable);
     }
     
     @Test

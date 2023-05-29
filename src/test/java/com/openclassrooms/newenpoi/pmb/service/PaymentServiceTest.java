@@ -10,14 +10,11 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -27,26 +24,23 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.openclassrooms.newenpoi.pmb.business.Account;
 import com.openclassrooms.newenpoi.pmb.business.Payment;
 import com.openclassrooms.newenpoi.pmb.business.User;
 import com.openclassrooms.newenpoi.pmb.dao.PaymentDao;
 import com.openclassrooms.newenpoi.pmb.dao.UserDao;
 import com.openclassrooms.newenpoi.pmb.service.impl.PaymentServiceImpl;
-import com.openclassrooms.newenpoi.pmb.service.impl.UserServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentServiceTest {
-	
-	private static PaymentServiceImpl paymentService;
 	
 	@Mock private static PaymentDao paymentDao;
 	
 	@Mock private static UserDao userDao;
 	
-	// Creating a mock of the pageable interface.
-    @Mock
-    private Pageable pageable;
+	// Mock pour l'interface Pageable.
+    @Mock private Pageable pageable;
+    
+    private static PaymentServiceImpl paymentService;
     
 	@BeforeEach
 	public void setup() {paymentService = new PaymentServiceImpl(paymentDao, userDao); }
@@ -96,11 +90,12 @@ public class PaymentServiceTest {
         // Given.
     	User sender = createUserWithBalance(100.0);
         User receiver = createUserWithBalance(50.0);
+        
         Payment p = new Payment(20, LocalDateTime.now(), "Gazole", sender, receiver);
         Optional<User> receiverOptional = Optional.of(receiver);
         
-        when(paymentDao.save(any(Payment.class))).thenReturn(p);
         when(userDao.findById(7L)).thenReturn(receiverOptional);
+        when(paymentDao.save(any(Payment.class))).thenReturn(p);
         
         // When.
         Payment payment = paymentService.payer(sender, 7L, "Gazole", 20);
@@ -119,11 +114,8 @@ public class PaymentServiceTest {
      * @return
      */
     private User createUserWithBalance(double balance) {
-        Account account = new Account();
-        account.setBalance(balance);
-        List<Account> accounts = Collections.singletonList(account);
         User user = new User();
-        user.setAccounts(accounts);
+        user.setBalance(balance);
         return user;
     }
 }
