@@ -1,5 +1,6 @@
 package com.openclassrooms.newenpoi.pmb.service;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -271,5 +273,30 @@ public class UserServiceTest {
         assertEquals(user.getEmail(), retrievedUserDTO.getEmail());
         
         verify(userDao, times(1)).findByEmail(email);
+    }
+    
+    @Test
+    @Disabled
+    public void testSupprimerContact_ReturnsUpdatedUser() {
+        // Given.
+    	// TODO : Il manque des propriétés à définir.
+        User contact = new User();
+        contact.setId(1L);
+
+        User user = new User();
+        user.setId(2L);
+        user.setContacts(Arrays.asList(contact));
+
+        when(userDao.findById(1L)).thenReturn(Optional.of(contact));
+        when(userDao.save(user)).thenReturn(user);
+
+        // When.
+        User updatedUser = userService.supprimerContact(user, 1L);
+
+        // Then.
+        assertNotNull(updatedUser);
+        assertFalse(updatedUser.getContacts().contains(contact));
+        verify(userDao).findById(1L);
+        verify(userDao).save(user);
     }
 }
