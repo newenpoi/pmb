@@ -15,6 +15,12 @@ public class HomeController {
 	
 	private final UserService userService;
 	
+	/**
+	 * Renvoie la vue de la page d'accueil de l'application.
+	 * Ajoute l'utilisateur s'il est connecté dans les objets de la vue.
+	 * @param authentication
+	 * @return
+	 */
 	@GetMapping("/")
 	public ModelAndView getHome(Authentication authentication) {
 		

@@ -20,6 +20,11 @@ public class RegisterController {
 	
 	private final UserService userService;
 	
+	/**
+	 * Renvoie la page d'inscription.
+	 * @param userForm
+	 * @return
+	 */
 	@GetMapping("/register")
 	public ModelAndView inscriptionGet(@ModelAttribute UserForm userForm) {
 		ModelAndView mav = new ModelAndView("register");

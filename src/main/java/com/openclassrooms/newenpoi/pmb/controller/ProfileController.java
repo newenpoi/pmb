@@ -21,6 +21,11 @@ public class ProfileController {
 	
 	private final UserService userService;
 	
+	/**
+	 * Renvoie le profil de l'utilisateur.
+	 * @param authentication
+	 * @return
+	 */
 	@GetMapping("/profile")
 	public ModelAndView getProfile(Authentication authentication) {
 		
@@ -33,6 +38,13 @@ public class ProfileController {
 		return mav;
 	}
 	
+	/**
+	 * Mets à jour le profil de l'utilisateur.
+	 * @param userForm
+	 * @param redirectAttributes
+	 * @param authentication
+	 * @return
+	 */
 	@PostMapping("/profile/update")
 	public ModelAndView updateProfile(@ModelAttribute UserForm userForm, RedirectAttributes redirectAttributes, Authentication authentication) {
 		

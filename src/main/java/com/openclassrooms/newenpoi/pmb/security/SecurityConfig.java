@@ -19,10 +19,10 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 	
     /**
-     * Autorize required urls.
-     * Sets up login parameters and redirections.
-     * Sets up logout parameters and redirections.
-     * Builds the configuration.
+     * Autorise les urls de base.
+     * Définie les paramètres de login et de redirections.
+     * Définie les paramètres de logout et de redirections.
+     * Créé la configuration.
      * @param http
      * @return
      * @throws Exception

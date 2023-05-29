@@ -23,6 +23,13 @@ public class ContactController {
 	public final static int NB_CONTACT_PAR_PAGE = 7;
 	private final UserService userService;
 	
+	/**
+	 * Renvoie une page de contacts de l'utilisateur.
+	 * @param page
+	 * @param numPage
+	 * @param authentication
+	 * @return
+	 */
 	@GetMapping("/contacts")
 	public ModelAndView getContacts(
 			@PageableDefault(size = NB_CONTACT_PAR_PAGE, sort = "name") Pageable page,
@@ -39,6 +46,13 @@ public class ContactController {
 		return mav;
 	}
 	
+	/**
+	 * Supprime un contact.
+	 * @param idContact
+	 * @param redirectAttributes
+	 * @param authentication
+	 * @return
+	 */
 	@GetMapping("/contacts/delete")
 	public ModelAndView deleteContact(@RequestParam Long idContact, RedirectAttributes redirectAttributes, Authentication authentication) {
 		User u = userService.supprimerContact(userService.recupererUtilisateur(authentication.getName()), idContact);
@@ -50,6 +64,13 @@ public class ContactController {
 		return new ModelAndView("redirect:/contacts");
 	}
 	
+	/**
+	 * Ajoute un contact.
+	 * @param email
+	 * @param redirectAttributes
+	 * @param authentication
+	 * @return
+	 */
 	@PostMapping("/contacts/add")
 	public ModelAndView addContact(@RequestParam String email, RedirectAttributes redirectAttributes, Authentication authentication) {
 				

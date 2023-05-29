@@ -3,7 +3,6 @@ package com.openclassrooms.newenpoi.pmb.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -60,12 +58,6 @@ public class PaymentServiceTest {
 	    // Then.
 	    assertNotNull(actual);
 	    assertEquals(expected, actual.getContent());
-	}
-	
-	@Test
-	@Disabled
-	public void testPayer_shouldReturnPayment() {
-		fail("Not implemented yet...");
 	}
 	
 	/**

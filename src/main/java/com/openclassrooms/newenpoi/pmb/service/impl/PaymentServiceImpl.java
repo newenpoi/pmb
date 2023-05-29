@@ -27,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	/**
-	 * On va juste effectuer le paiement, rien transférer (encore).
+	 * On va juste effectuer le paiement et le solde utilisateur sera à jour.
 	 */
 	@Override
 	public Payment payer(User u, Long connection, String description, double sum) {

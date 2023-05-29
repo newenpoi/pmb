@@ -29,6 +29,13 @@ public class PaymentController {
 	private final UserService userService;
 	private final PaymentService paymentService;
 	
+	/**
+	 * Renvoie une page de paiements de l'utilisateur.
+	 * @param page
+	 * @param numPage
+	 * @param authentication
+	 * @return
+	 */
 	@GetMapping("/payments")
 	public ModelAndView getPayments(
 			@PageableDefault(size = NB_PAIEMENT_PAR_PAGE, sort = "delivered", direction = Sort.Direction.DESC) Pageable page,
@@ -44,6 +51,13 @@ public class PaymentController {
 		return mav;
 	}
 	
+	/**
+	 * Créé un nouveau paiement depuis et vers l'utilisateur (données du formulaire).
+	 * @param paymentForm
+	 * @param redirectAttributes
+	 * @param authentication
+	 * @return
+	 */
 	@PostMapping("/payments/pay")
 	public ModelAndView pay(@ModelAttribute("paymentForm") PaymentForm paymentForm, RedirectAttributes redirectAttributes, Authentication authentication) {
 		

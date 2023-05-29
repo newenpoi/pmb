@@ -10,6 +10,10 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class LoginController {
     
+	/**
+	 * Renvoie la page de login.
+	 * @return
+	 */
 	@GetMapping("/user-login")
     public ModelAndView connexionGet() {
         ModelAndView mav = new ModelAndView("login");
@@ -28,6 +32,11 @@ public class LoginController {
         return mav;
     }
 	
+	/**
+	 * Déconnecte l'utilisateur.
+	 * @param request
+	 * @return
+	 */
 	@GetMapping("/logout")
 	public ModelAndView logoutGet(HttpServletRequest request) {
 		
