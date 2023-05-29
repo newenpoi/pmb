@@ -42,8 +42,9 @@ public class RegisterController {
 		}
 		
 		userService.register(userForm);
-		redirectAttributes.addFlashAttribute("inscription", true);
 		
+		// Ajoute un attribut ponctuel pour la vue.
+		redirectAttributes.addFlashAttribute("inscription", true);
 		return new ModelAndView("redirect:/");
 	}
 }

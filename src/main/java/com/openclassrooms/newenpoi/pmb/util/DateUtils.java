@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DateUtils {
 	
-	private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+	private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	/*
 	 * Calcul l'âge d'une entité en fonction de sa date de naissance.
@@ -21,8 +21,8 @@ public class DateUtils {
 	}
 	
 	/**
-	 * 
-	 * @param dob (MM/dd/yyyy)
+	 * Converti une date de naissance au format JJ/MM/AAA vers une LocalDate.
+	 * @param dob (dd/MM/yyyy)
 	 * @return
 	 * @throws DateTimeException
 	 */

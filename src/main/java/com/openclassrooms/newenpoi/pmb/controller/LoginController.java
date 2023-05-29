@@ -16,6 +16,10 @@ public class LoginController {
         return mav;
     }
 	
+	/**
+	 * En cas d'authentification échouée.
+	 * @return
+	 */
 	@GetMapping("/user-login/failure")
     public ModelAndView getCustomLoginForm() {
 		ModelAndView mav = connexionGet();
