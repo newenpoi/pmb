@@ -79,8 +79,9 @@ public class InitController implements CommandLineRunner {
 			String email = String.format("%s.%s@gmail.com", name, forename);
 			String password = faker.internet().password();
 			LocalDate dob = faker.date().birthday(18, 70).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			double balance = faker.number().randomDouble(2, 1000, 3000);
 			
-			User u = new User(email, password, name, forename, dob);
+			User u = new User(email, password, name, forename, dob, balance);
 			
 			u.setAddresses(Arrays.asList(addressDao.findById(Long.valueOf(i + 1)).orElse(null)));
 			u.setAccounts(Arrays.asList(accountDao.findById(Long.valueOf(i + 1)).orElse(null)));
