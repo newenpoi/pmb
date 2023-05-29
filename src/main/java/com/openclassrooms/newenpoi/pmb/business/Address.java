@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "adresses")
@@ -40,6 +41,7 @@ public class Address {
     @Column(name = "ville")
     private String city;
 
+    @ToString.Exclude
     @ManyToMany(mappedBy = "addresses")
     private List<User> users;
     

@@ -26,8 +26,13 @@ public class Account {
 	@Column(name = "compte_id")
 	private Long id;
 
+	/**
+	 * Considère dans le cadre de l'exercice que ceci est par exemple son iban.
+	 */
 	@Column(name = "numero_compte", unique = true)
     private int accountNumber;
+	
+	private String label;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "compte_type")
