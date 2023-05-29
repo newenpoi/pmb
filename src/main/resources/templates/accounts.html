@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments/general :: headerfiles"></th:block>
+</head>
+<body>
+	<th:block th:insert="fragments/general :: header"></th:block>
+	
+	<main class="d-flex flex-column justify-content-center">
+		<h5 class="mb-2">Send money to my bank account (current balance : <span th:text="${#numbers.formatDecimal(currentBalance, 0, 0) + '€'}"></span>)</h5>
+		
+		<!-- Transfert vers le Compte Bancaire -->
+		<form method="post" th:action="@{/accounts/transfert}" class="form-payment d-flex justify-content-evenly p-3 mt-1 w-100 bg-gray">
+			<select name="idAccount" class="px-2 form-control">
+				<option value="0">Select Account</option>
+				<th:block th:each="account : ${accounts}">
+					<option th:value="${account.id}" th:text="${account.accountNumber}"></option>
+				</th:block>
+			</select>
+			
+			<input type="number" name="sum" placeholder="0€" min="1" required>
+			<input type="submit" value="Transfert">
+		</form>
+		
+		<div th:if="${transfert}" class="pl-2 mt-2">
+			<p class="text-success">Fund transfert successful.</p>
+		</div>
+		
+		<div th:if="${error} and ${error == 1}" class="pl-2 mt-2">
+			<p class="text-danger">Error during fund transfert.</p>
+		</div>
+		
+		<h5 class="mb-2 mt-4">Transfert money to my PayMyBuddy account</h5>
+		
+		<!-- Transfert vers le Compte Utilisateur -->
+		<form method="post" th:action="@{/accounts/refill}" class="form-payment d-flex justify-content-evenly p-3 mt-1 w-100 bg-gray">
+			<select name="idAccount" class="px-2 form-control">
+				<option value="0">Select Account</option>
+				<th:block th:each="account : ${accounts}">
+					<option th:value="${account.id}" th:text="${account.accountNumber}"></option>
+				</th:block>
+			</select>
+			
+			<input type="number" name="sum" placeholder="0€" min="1" required>
+			<input type="submit" value="Transfert">
+		</form>
+		
+		<div th:if="${credit}" class="pl-2 mt-2">
+			<p class="text-success">Fund transfert to PMB account successful.</p>
+		</div>
+		
+		<div th:if="${error} and ${error == 2}" class="pl-2 mt-2">
+			<p class="text-danger">Error during fund transfert to PMB account.</p>
+		</div>
+	</main>
+	
+	<th:block th:insert="fragments/general :: footer"></th:block>
+</body>
+</html>
