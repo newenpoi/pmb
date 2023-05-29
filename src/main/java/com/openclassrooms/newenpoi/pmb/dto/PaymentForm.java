@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class PaymentForm {
     private Long connection;
-    private Integer amount;
+    private double amount;
     private String description;
 }
