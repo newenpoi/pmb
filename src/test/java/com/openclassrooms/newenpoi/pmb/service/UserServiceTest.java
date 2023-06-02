@@ -206,6 +206,7 @@ public class UserServiceTest {
         userForm.setAddress(address);
         
         User user = new User(); user.setId(idUser);
+        user.setAddresses(Arrays.asList(address));
         
         when(userDao.findById(idUser)).thenReturn(Optional.of(user));
         when(userDao.save(user)).thenReturn(user);

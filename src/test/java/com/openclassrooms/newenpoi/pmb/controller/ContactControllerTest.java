@@ -85,7 +85,7 @@ public class ContactControllerTest {
     
     @Test
     public void testAddContact() throws Exception {
-        User contact = new User("anya.forger@eden.com", "azerty", "Forger", "Anya", LocalDate.now(), 1000);
+        User contact = new User("anya.forger@eden.com", "azerty", "Forger", "Anya", LocalDate.now());
     	
     	// Arrange.
         when(userService.ajouterContact(anyString(), anyString())).thenReturn(contact);

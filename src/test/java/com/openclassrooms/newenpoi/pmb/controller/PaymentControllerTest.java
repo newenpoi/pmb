@@ -100,7 +100,7 @@ public class PaymentControllerTest {
     	Payment p = new Payment();
         PaymentForm paymentForm = new PaymentForm();
         
-        paymentForm.setAmount(50);
+        paymentForm.setAmount(50D);
         paymentForm.setConnection(7L);
     	
         when(paymentService.payer(any(User.class), any(Long.class), any(String.class), anyDouble())).thenReturn(p);

@@ -39,7 +39,7 @@ public class AccountServiceTest {
 	public void testRecupererComptes_shouldReturnListOfAccount_ofUser() {
 	    // Given.
 	    User u = new User();
-		List<Account> expected = Arrays.asList(new Account(27, 2000));
+		List<Account> expected = Arrays.asList(new Account("FR55-226A-2000-2000-2000", "Personal", 2000));
 	    
 	    when(accountDao.findByUser(u)).thenReturn(expected);
 	    
