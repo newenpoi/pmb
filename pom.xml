@@ -171,7 +171,9 @@
 							<excludes>
 								<exclude>*get*</exclude>
 								<exclude>*set*</exclude>
+								<exclude>**/com/openclassrooms/newenpoi/pmb/PmbApplication.class</exclude>
 								<exclude>**/com/openclassrooms/newenpoi/pmb/controller/InitController.class</exclude>
+								<exclude>**/com/openclassrooms/newenpoi/pmb/controller/CustomErrorController.class</exclude>
 							</excludes>
 						</configuration>
 					</execution>

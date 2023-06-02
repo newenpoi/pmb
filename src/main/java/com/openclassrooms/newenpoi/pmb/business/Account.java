@@ -30,7 +30,7 @@ public class Account {
 	 * Considère dans le cadre de l'exercice que ceci est par exemple son iban.
 	 */
 	@Column(name = "numero_compte", unique = true)
-    private int accountNumber;
+    private String accountNumber;
 	
 	private String label;
 
@@ -45,10 +45,14 @@ public class Account {
     @JoinColumn(name = "utilisateur_id")
     private User user;
     
-    public Account(int accountNumber, double balance) {
-    	this.accountType = AccountType.CHECKING;
-    	
+    public Account(String accountNumber, String label) {
     	this.accountNumber = accountNumber;
+    	this.label = label;
+    	this.accountType = AccountType.CHECKING;
+    }
+    
+    public Account(String accountNumber, String label, double balance) {
+    	this(accountNumber, label);
     	this.balance = balance;
     }
 }

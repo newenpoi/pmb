@@ -84,12 +84,12 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
-	public User(String email, String password, String name, String forename, LocalDate dob, double balance) {
+	public User(String email, String password, String name, String forename, LocalDate dob) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.forename = forename;
 		this.dob = dob;
-		this.balance = balance;
+		this.balance = 0;
 	}
 }

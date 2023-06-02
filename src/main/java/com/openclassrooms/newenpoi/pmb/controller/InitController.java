@@ -47,18 +47,18 @@ public class InitController implements CommandLineRunner {
 		if (addressDao.count() == 0) generateAddresses();
 		
 		// Créér des comptes bidon.
-		if (accountDao.count() == 0) generateAccounts();
+		// if (accountDao.count() == 0) generateAccounts();
 		
 		// Créér des utilisateurs bidon.
 		if (userDao.count() == 0) generateUsers();
 		
 		// Générer des paiements bidon.
-		if (paymentDao.count() == 0) generatePayments();
+		// if (paymentDao.count() == 0) generatePayments();
 	}
 	
 	public void generateAccounts() {
-		accountDao.save(new Account(faker.number().numberBetween(100000, 800000), faker.number().randomDouble(2, 5, 3000)));
-		accountDao.save(new Account(faker.number().numberBetween(100000, 800000), faker.number().randomDouble(2, 5, 3000)));
+		accountDao.save(new Account("Init Controller 001", "Init Controller", faker.number().randomDouble(2, 5, 3000)));
+		accountDao.save(new Account("Init Controller 002", "Init Controller", faker.number().randomDouble(2, 5, 3000)));
 	}
 	
 	public void generateAddresses() {		
@@ -76,24 +76,17 @@ public class InitController implements CommandLineRunner {
 		for (int i = 0; i < USER_AMOUNT; i++) {
 			String name = faker.name().lastName();
 			String forename = faker.name().firstName();
-			String email = String.format("%s.%s@gmail.com", name, forename);
+			String email = String.format("%s.%s@gmail.com", name, forename).toLowerCase();
 			String password = faker.internet().password();
 			LocalDate dob = faker.date().birthday(18, 70).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			double balance = faker.number().randomDouble(2, 1000, 3000);
 			
-			User u = new User(email, password, name, forename, dob, balance);
+			User u = new User(email, password, name, forename, dob);
 			
 			u.setAddresses(Arrays.asList(addressDao.findById(Long.valueOf(i + 1)).orElse(null)));
 			u.setAccounts(Arrays.asList(accountDao.findById(Long.valueOf(i + 1)).orElse(null)));
 			
 			users.add(u);
 		}
-		
-		users = userDao.saveAll(users);
-		
-		// adds contacts for the first user.
-		users.get(0).getContacts().add(users.get(1));
-		users.get(0).getContacts().add(users.get(2));
 		
 		userDao.saveAll(users);
 	}
