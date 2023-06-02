@@ -6,9 +6,10 @@
 <body>
 	<th:block th:insert="fragments/general :: header"></th:block>
 	
-	<main class="d-flex flex-column justify-content-center align-items-center h-100">
-		<h2 th:if="${inscription == null}">Welcome to Pay My Buddy !</h2>
-		<h3 th:if="${inscription}" class="text-green">Votre inscription a bien été prise en compte !</h3>
+	<main class="d-flex flex-column justify-content-center h-100">
+		<h2 th:if="${user != null}">Welcome back, <span th:text="${user.forename}"></span>!</h2>
+		<h2 th:if="${user == null}">Welcome to Pay My Buddy!</h2>
+		<small th:if="${inscription}" class="text-info">Votre inscription a bien été prise en compte !</small>
 	</main>
 	
 	<th:block th:insert="fragments/general :: footer"></th:block>

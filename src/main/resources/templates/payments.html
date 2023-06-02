@@ -17,23 +17,28 @@
 		<!-- Actions -->
 		<form method="post" th:action="@{/payments/pay}" th:object="${paymentForm}" class="form-payment d-flex justify-content-evenly p-5 mt-1 w-100 bg-gray">
 			<select name="connection" class="px-2 form-control">
-				<option value="0">Select Target</option>
+				<option th:if="${contacts.size == 0}" value="0">Select Target</option>
 				<th:block th:each="contact : ${contacts}">
-					<option th:value="${contact.id}" th:text="${#strings.toUpperCase(contact.name + ' ' + contact.forename)}"></option>
+					<option th:value="${contact.id}" th:text="${#strings.toUpperCase(contact.name + ' ' + contact.forename)}" selected></option>
 				</th:block>
 			</select>
 			
 			<input type="number" min="1" name="amount" class="form-control" placeholder="0€">
 			<input type="text" name="description" max="255" class="form-control" placeholder="Description" autocomplete="off">
-			<input type="submit" value="PAY" class="btn-pay form-control bg-info">
+			<input th:if="${contacts.size == 0}" type="submit" value="PAY" class="btn-pay form-control" disabled>
+			<input th:if="${contacts.size > 0}" type="submit" value="PAY" class="btn btn-pay btn-info form-control">
 		</form>
 		
 		<div th:if="${payment}" class="pl-2 mt-2">
 			<p class="text-success">Payment sent successfully.</p>
 		</div>
 		
-		<div th:if="${error}" class="pl-2 mt-2">
+		<div th:if="${error != null && error == 1}" class="pl-2 mt-2">
 			<p class="text-danger">Payment cannot be proceeded.</p>
+		</div>
+		
+		<div th:if="${error != null && error == 2}" class="pl-2 mt-2">
+			<p class="text-danger">Insufficient funds.</p>
 		</div>
 		
 		<!-- Liste des Transferts -->

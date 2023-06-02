@@ -30,6 +30,10 @@
 			</div>
 			
 			<input type="submit" value="Modify" class="form-control btn btn-primary w-100">
+			
+			<div th:if="${modification}" class="pl-2 mt-2">
+				<p class="text-success">Profile successfully modified.</p>
+			</div>
 		</form>
 	</main>
 	
