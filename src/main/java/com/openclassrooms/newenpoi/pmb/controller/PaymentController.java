@@ -64,15 +64,15 @@ public class PaymentController {
 		// Je récupère les informations de mon utilisateur authentifié.
 		User u = userService.recupererUtilisateur(authentication.getName());
 		
-		// On ne peut s'envoyer de l'argent à soi-même.
-		if (u.getId() == paymentForm.getConnection()) redirectAttributes.addFlashAttribute("error", true);
+		// On pense à traiter les différents cas d'erreur si on utilise pas BindingResult.
+		if (paymentForm.getConnection() == null || paymentForm.getAmount() == null || paymentForm.getAmount() <= 0 || u.getId() == paymentForm.getConnection()) redirectAttributes.addFlashAttribute("error", 1);
 		else {
 
 			// Appelle le service pour procéder au paiement.
 			Payment p = paymentService.payer(u, paymentForm.getConnection(), paymentForm.getDescription(), paymentForm.getAmount());
-			
+
 			// Définie les attributs en fonction du résultat de l'expression.
-			if (p == null) redirectAttributes.addFlashAttribute("error", true);
+			if (p == null) redirectAttributes.addFlashAttribute("error", 2);
 			else redirectAttributes.addFlashAttribute("payment", p);
 		}
 		

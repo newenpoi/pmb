@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		List<Address> addresses = new ArrayList<>();
 		
 		LocalDate dob = DateUtils.dobToLocalDate(userForm.getDob());
-		User user = new User(userForm.getEmail(), encoder.encode(userForm.getPassword()), userForm.getForename(), userForm.getLastName(), dob, 1000);
+		User user = new User(userForm.getEmail(), encoder.encode(userForm.getPassword()), userForm.getLastName(), userForm.getForename(), dob);
 	    Address address = userForm.getAddress();
 
 	    // Il faut penser à sauver l'adresse avant de l'ajouter à l'utilisateur et éviter un TransientObjectException.
@@ -93,10 +93,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userDao.save(user);
 	}
 
+	/**
+	 * On exploite qu'une seule addresse dans le cadre de l'exercice.
+	 */
 	@Override
 	public User modifierProfil(Long idUser, UserForm userForm) {
 		
-		List<Address> addresses = new ArrayList<>();
 		User user = userDao.findById(idUser).orElse(null);
 		
 		if (user == null) return null;
@@ -104,13 +106,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		user.setForename(userForm.getForename());
 		user.setName(userForm.getLastName());
 		
-		LocalDate dob = DateUtils.dobToLocalDate(userForm.getDob());
-		user.setDob(dob);
+		// LocalDate dob = DateUtils.dobToLocalDate(userForm.getDob());
+		// user.setDob(dob);
 		
 		Address address = userForm.getAddress();
-		addresses.add(address);
 		
-		user.setAddresses(addresses);
+		user.getAddresses().get(0).setNumber(address.getNumber());
+		user.getAddresses().get(0).setStreet(address.getStreet());
+		user.getAddresses().get(0).setExtra(address.getExtra());
+		user.getAddresses().get(0).setZipCode(address.getZipCode());
+		user.getAddresses().get(0).setCity(address.getCity());
 		
 		return userDao.save(user);
 	}
