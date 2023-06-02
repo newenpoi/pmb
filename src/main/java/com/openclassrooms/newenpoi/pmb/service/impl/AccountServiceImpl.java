@@ -66,4 +66,12 @@ public class AccountServiceImpl implements AccountService {
 		
 		return accountDao.save(a);
 	}
+
+	@Override
+	public Account ajouterCompte(User u, String accountNumber, String label) {
+		Account a = new Account(accountNumber, label, 1000);
+		a.setUser(u);
+		
+		return accountDao.save(a);
+	}
 }

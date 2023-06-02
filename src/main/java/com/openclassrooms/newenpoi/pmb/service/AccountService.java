@@ -9,4 +9,5 @@ public interface AccountService {
 	List<Account> recupererComptes(User u);
 	Account transferer(User u, double sum);
 	Account crediter(User u, double sum);
+	Account ajouterCompte(User u, String accountNumber, String label);
 }

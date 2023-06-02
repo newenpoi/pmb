@@ -39,6 +39,31 @@ public class AccountController {
 	}
 	
 	/**
+	 * Lie un compte bancaire à l'utilisateur.
+	 * @param accountNumber
+	 * @param label
+	 * @param authentication
+	 * @return
+	 */
+	@PostMapping("/accounts/add")
+	public ModelAndView accountAdd(@RequestParam String accountNumber, @RequestParam String label, Authentication authentication) {
+		// Récupère les données métier de l'utilisateur authentifié.
+		User u = userService.recupererUtilisateur(authentication.getName());
+		
+		// Ajoute le compte via notre couche service.
+		Account a = accountService.ajouterCompte(u, accountNumber, label);
+		
+		// Appelle la vue d'orine.
+		ModelAndView mav = accountGet(authentication);
+		
+		// Ajoute les données au modèle selon le résultat.
+		if (a == null) mav.addObject("error", 1);
+		else mav.addObject("account", a);
+		
+		return mav;
+	}
+	
+	/**
 	 * Transfert de l'argent vers le compte en banque (une taxe est appliquée).
 	 * Dans le cadre de l'exercice on considère qu'un seul compte est lié.
 	 * @param sum
@@ -53,12 +78,12 @@ public class AccountController {
 		// Transfert l'argent vers le compte.
 		Account a = accountService.transferer(u, sum);
 		
-		// Créé la vue.
-		ModelAndView mav = new ModelAndView("accounts");
-		mav.addObject("currentBalance", u.getBalance());
-		mav.addObject("transfert", a);
+		// Appelle la vue d'orine.
+		ModelAndView mav = accountGet(authentication);
 		
-		if (a == null) mav.addObject("error", 1);
+		// Ajoute les données au modèle selon le résultat.
+		if (a == null) mav.addObject("error", 2);
+		else mav.addObject("transfert", a);
 		
 		return mav;
 	}
@@ -78,12 +103,12 @@ public class AccountController {
 		// Transfert l'argent vers le compte.
 		Account a = accountService.crediter(u, sum);
 		
-		// Créé la vue.
-		ModelAndView mav = new ModelAndView("accounts");
-		mav.addObject("currentBalance", u.getBalance());
-		mav.addObject("credit", a);
-		
-		if (a == null) mav.addObject("error", 2);
+		// Appelle la vue d'orine.
+		ModelAndView mav = accountGet(authentication);
+
+		// Ajoute les données au modèle selon le résultat.
+		if (a == null) mav.addObject("error", 3);
+		else mav.addObject("credit", a);
 		
 		return mav;
 	}
