@@ -30,7 +30,7 @@ CREATE TABLE `adresses` (
   `rue` varchar(255) DEFAULT NULL,
   `code_postal` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`adresse_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,15 +42,16 @@ DROP TABLE IF EXISTS `comptes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comptes` (
   `compte_id` bigint NOT NULL AUTO_INCREMENT,
-  `numero_compte` int DEFAULT NULL,
+  `numero_compte` varchar(255) DEFAULT NULL,
   `compte_type` varchar(255) DEFAULT NULL,
   `solde` double DEFAULT NULL,
-  `utilisateur_id` bigint DEFAULT NULL,
   `label` varchar(255) DEFAULT NULL,
+  `utilisateur_id` bigint DEFAULT NULL,
   PRIMARY KEY (`compte_id`),
+  UNIQUE KEY `UK_coswgxmsdb8j51fkqp4ncg27k` (`numero_compte`),
   KEY `FK1x2med8da6mnu9oqkuw17xvvc` (`utilisateur_id`),
   CONSTRAINT `FK1x2med8da6mnu9oqkuw17xvvc` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`utilisateur_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +64,7 @@ DROP TABLE IF EXISTS `paiements`;
 CREATE TABLE `paiements` (
   `paiement_id` bigint NOT NULL AUTO_INCREMENT,
   `amount` double NOT NULL,
-  `delivered` date DEFAULT NULL,
+  `delivered` datetime(6) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `receveur_id` bigint DEFAULT NULL,
   `emetteur_id` bigint DEFAULT NULL,
@@ -72,7 +73,7 @@ CREATE TABLE `paiements` (
   KEY `FKex5ai5effp7n9qgbfeng6vpiu` (`emetteur_id`),
   CONSTRAINT `FKex5ai5effp7n9qgbfeng6vpiu` FOREIGN KEY (`emetteur_id`) REFERENCES `utilisateur` (`utilisateur_id`),
   CONSTRAINT `FKgwqvgaq3et3rslqab8jh21s48` FOREIGN KEY (`receveur_id`) REFERENCES `utilisateur` (`utilisateur_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,14 +116,15 @@ DROP TABLE IF EXISTS `utilisateur`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `utilisateur` (
   `utilisateur_id` bigint NOT NULL AUTO_INCREMENT,
+  `balance` double NOT NULL,
   `date_naissance` date DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `prenom` varchar(255) DEFAULT NULL,
   `nom` varchar(255) DEFAULT NULL,
   `mot_de_passe` varchar(255) DEFAULT NULL,
-  `balance` double NOT NULL,
-  PRIMARY KEY (`utilisateur_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`utilisateur_id`),
+  UNIQUE KEY `UK_rma38wvnqfaf66vvmi57c71lo` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,4 +174,4 @@ CREATE TABLE `utilisateurs_contacts` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-29 16:31:44
+-- Dump completed on 2023-06-03 10:00:57
