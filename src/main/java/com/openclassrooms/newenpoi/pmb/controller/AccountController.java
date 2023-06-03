@@ -57,7 +57,7 @@ public class AccountController {
 		ModelAndView mav = accountGet(authentication);
 		
 		// Ajoute les données au modèle selon le résultat.
-		if (a == null) mav.addObject("error", 1);
+		if (a == null) mav.addObject("error", "Account cannot be added.");
 		else mav.addObject("account", a);
 		
 		return mav;
@@ -82,7 +82,7 @@ public class AccountController {
 		ModelAndView mav = accountGet(authentication);
 		
 		// Ajoute les données au modèle selon le résultat.
-		if (a == null) mav.addObject("error", 2);
+		if (a == null) mav.addObject("error", "Cannot make a fund transfert.");
 		else mav.addObject("transfert", a);
 		
 		return mav;
@@ -107,8 +107,8 @@ public class AccountController {
 		ModelAndView mav = accountGet(authentication);
 
 		// Ajoute les données au modèle selon le résultat.
-		if (a == null) mav.addObject("error", 3);
-		else mav.addObject("credit", a);
+		if (a == null) mav.addObject("error", "Cannot refill account.");
+		else mav.addObject("refill", sum);
 		
 		return mav;
 	}

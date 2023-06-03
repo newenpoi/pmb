@@ -65,14 +65,16 @@ public class PaymentController {
 		User u = userService.recupererUtilisateur(authentication.getName());
 		
 		// On pense à traiter les différents cas d'erreur si on utilise pas BindingResult.
-		if (paymentForm.getConnection() == null || paymentForm.getAmount() == null || paymentForm.getAmount() <= 0 || u.getId() == paymentForm.getConnection()) redirectAttributes.addFlashAttribute("error", 1);
+		if (paymentForm.getConnection() == null || paymentForm.getAmount() == null || paymentForm.getAmount() <= 0 || u.getId() == paymentForm.getConnection()) {
+			redirectAttributes.addFlashAttribute("error", "Le formulaire est incomplet ou invalide.");
+		}
 		else {
-
+			
 			// Appelle le service pour procéder au paiement.
 			Payment p = paymentService.payer(u, paymentForm.getConnection(), paymentForm.getDescription(), paymentForm.getAmount());
 
 			// Définie les attributs en fonction du résultat de l'expression.
-			if (p == null) redirectAttributes.addFlashAttribute("error", 2);
+			if (p == null) redirectAttributes.addFlashAttribute("error", "Erreur lors du paiement.");
 			else redirectAttributes.addFlashAttribute("payment", p);
 		}
 		

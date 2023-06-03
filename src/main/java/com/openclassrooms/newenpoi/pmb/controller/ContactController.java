@@ -58,7 +58,7 @@ public class ContactController {
 		User u = userService.supprimerContact(userService.recupererUtilisateur(authentication.getName()), idContact);
 		
 		// Ajoute un nouveau flash attribute en cas d'erreur.
-		if (u == null) redirectAttributes.addFlashAttribute("error", 3);
+		if (u == null) redirectAttributes.addFlashAttribute("error", "Cannot delete this contact.");
 		
 		// Redirige.
 		return new ModelAndView("redirect:/contacts");
@@ -76,14 +76,14 @@ public class ContactController {
 				
 		if (email.equals(authentication.getName())) {
 			// On ne peut s'ajouter soi même.
-			redirectAttributes.addFlashAttribute("error", 1);
+			redirectAttributes.addFlashAttribute("error", "You cannot add yourself.");
 		}
 		else {
 			// Ajoute le contact.
 			User c = userService.ajouterContact(authentication.getName(), email);
 			
 			// Spécifie l'erreur ou le contact ajouté dans les attributs.
-			if (c == null) redirectAttributes.addFlashAttribute("error", 2);
+			if (c == null) redirectAttributes.addFlashAttribute("error", "An error occurred while adding contact.");
 			else redirectAttributes.addFlashAttribute("contact", email);
 		}
 

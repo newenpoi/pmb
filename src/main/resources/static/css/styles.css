@@ -36,9 +36,19 @@ p { margin: 0; }
 	margin-left: .4rem;
 }
 
+.table-payments-header {
+	height: 64px;
+	color: white;
+	font-size: 10pt;
+}
+
 .table-payments-header > div {
 	flex-basis: 0;
 	padding-left: .4rem;
+}
+
+.table-payments-data {
+	height: 32px;
 }
 
 .table-payments-data:nth-child(even) {
