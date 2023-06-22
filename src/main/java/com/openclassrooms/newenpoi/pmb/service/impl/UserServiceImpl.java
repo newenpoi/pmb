@@ -100,7 +100,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User modifierProfil(Long idUser, UserForm userForm) {
 		
 		User user = userDao.findById(idUser).orElse(null);
-		
 		if (user == null) return null;
 		
 		user.setForename(userForm.getForename());

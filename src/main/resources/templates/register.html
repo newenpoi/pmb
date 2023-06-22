@@ -10,14 +10,16 @@
 		<!-- Inscription -->
 		<form method="post" th:action="@{/register/validate}" th:object="${utilisateur}" class="form-register d-flex flex-column justify-content-center p-3 mt-1 w-100 border border-secondary">
 			
+			<div th:if="${error}" class="pl-2 mt-2">
+				<p class="text-danger" th:text="${error}"></p>
+			</div>
+			
 			<div class="register-credentials form-group mb-4">
 				<label for="i-email" class="label-form">Email :</label>
 				<input type="email" id="i-email" name="email" placeholder="Email" autocomplete="off" class="form-control mb-1" value="loid.forger@eden.com">
-				<small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">This email is not valid.</small>
 				
 				<label for="i-passwd" class="label-form">Password :</label>
 				<input type="password" id="i-passwd" name="password" placeHolder="Mot de Passe" class="form-control mb-1" value="logme1nn">
-				<small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">This password is not valid.</small>
 			</div>
 			
 			<div class="register-personal form-group mb-4">

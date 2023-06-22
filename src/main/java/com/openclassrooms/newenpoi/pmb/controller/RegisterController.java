@@ -43,6 +43,7 @@ public class RegisterController {
 		
 		if (result.hasErrors()) {
 			ModelAndView mav = inscriptionGet(userForm);
+			mav.addObject("error", "Certain fields are not filled properly.");
 			return mav;
 		}
 		
